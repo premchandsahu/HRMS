@@ -1,0 +1,142 @@
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>    
+
+
+
+<div id="div2">
+<p id="company">third(i)</p>
+<p id="slogan">Information. Intelligence. Insight. </p>
+
+<button id="logout" style="float:right" onclick="${username}">Logout</button> 
+</div><br><br>
+<div>
+<p id ="pms">Performance Management System</p>
+</div>
+
+<div id="test"></div>
+
+<p>You are successfully logged in! </p>
+
+
+
+<br>
+<br>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<style>
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+li {
+    float: left;
+    border: 1px solid #000;
+    border-bottom-width: 0;
+    margin: 3px 3px 0px 3px;
+    padding: 5px 5px 0px 5px;
+    background-color: #CCC;
+    color: #696969;
+}
+#mainView {
+    border: 1px solid black;
+	clear: both;
+	padding: 0 1em;
+}
+.active {
+    background-color: #FFF;
+    color: #000;
+}
+</style>
+<div ng-app="TabsApp">
+    <div id="tabs" ng-controller="TabsCtrl">
+        <ul>
+            <li ng-repeat="tab in tabs" 
+                ng-class="{active:isActiveTab(tab.url)}" 
+                ng-click="onClickTab(tab)">{{tab.title}}</li>
+        </ul>
+        <div id="mainView">
+            <div ng-include="currentTab"></div>
+        </div>
+    </div>
+     
+<c:set var="sectionname" value=""/>
+		
+			
+    <c:forEach var="a" items="${list}">   
+    	<c:if test= "${not sectionname eq a.section}" >
+    		<script type="text/ng-template" id="{a.questioncolorder}.tpl.html">
+			<div id="view{a.questioncolorder}">
+			<h1>View One</h1>
+		</c:if> 
+				<div>
+   				${a.section}
+   				${a.question}
+  				${a.remarks} 
+   				${a.rating}
+				</div>  
+    	<c:if test="${not sectionname eq a.section}">
+			<c:set var="sectionname" value="${a.section}"/>
+			</div>
+			</script>
+		</c:if> 
+	</c:forEach> 	
+</div>
+	
+<script>
+angular.module('TabsApp', [])
+.controller('TabsCtrl', ['$scope', function ($scope) {
+    $scope.tabs = [{
+            title: 'One',
+            url: '1.tpl.html'
+        }, {
+            title: 'Two',
+            url: '2.tpl.html'
+        }, {
+            title: 'Three',
+            url: '3.tpl.html'
+    	}, {
+        	title: 'Four',
+        	url: '4.tpl.html'
+		}, {
+    		title: 'Five',
+    		url: '5.tpl.html'
+		}, {
+    		title: 'Six',
+    		url: '6.tpl.html'
+		}, {
+    		title: 'Seven',
+    		url: '7.tpl.html'
+		}];
+
+    $scope.currentTab = '1.tpl.html';
+
+    $scope.onClickTab = function (tab) {
+        $scope.currentTab = tab.url;
+    }
+    
+    $scope.isActiveTab = function(tabUrl) {
+        return tabUrl == $scope.currentTab;
+    }
+}]);
+</script>                
+<script type="text/javascript">
+function sessionOut(user)
+{
+	
+	//var username=user;
+	document.getElementById("test").innerHTML=user+"  manual";
+	window.location = "index.jsp";
+	
+	
+}
+</script>               
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
