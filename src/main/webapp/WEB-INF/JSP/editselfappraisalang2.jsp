@@ -98,6 +98,9 @@ body {font-family: Arial;}
 	<h3>${a.question}</h3>
 	<textarea name="selfappraisal[${status.index}].remarks" value="${a.remarks}"></textarea>
 	<td><input name="selfappraisal[${status.index}].rating" value="${a.rating}" maxlength="1" size="1"/></td>
+	<td><Label name="selfappraisal[${status.index}].apprempratingid" value="${a.apprempratingid}" /></td>
+	<td><Label name="selfappraisal[${status.index}].question" value="${a.question}" /></td>\
+	<td><Label name="selfappraisal[${status.index}].question" value="${a.section}" /></td>
  	<c:set var="sectionname2" value="${a.section}"/>
 </c:forEach>
 </div>
