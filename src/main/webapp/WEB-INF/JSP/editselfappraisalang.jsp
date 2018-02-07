@@ -1,7 +1,6 @@
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>    
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>    
-
-
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <div id="div2">
 <p id="company">third(i)</p>
@@ -47,6 +46,7 @@ li {
     color: #000;
 }
 </style>
+<form:form method="post" action="saveappraisal" modelAttribute="selfappraisal">
  <%
 out.print("Welcome to self appraisal form ");
  %>    
@@ -67,7 +67,8 @@ out.print("Welcome to self appraisal form ");
 <c:set var="sectionname2" value="ABC"/>
 <c:set var="firstrun" value="true"/>
 <% int i=0; %>
-<c:forEach var="a" items="${list}">
+<c:forEach var="a" items="${selfAppraisals.selfappraisal}" varStatus="status">
+
 <c:set var="orderq" value="${a.sectioncolorder}"/>
 	<c:set var="sectionname1" value="${a.section}"/>
 	<c:if test= "${sectionname1 ne sectionname2}" >
@@ -81,15 +82,20 @@ out.print("Welcome to self appraisal form ");
 		<c:set var="firstrun" value="false"/>
 	</c:if>
 	<div id="view${orderq}">
-		<h1>${a.question}</h1>
+		<h3>${a.question}</h3>
+			<textarea name="selfappraisal[${status.index}].remarks" value="${a.remarks}"></textarea>
+			<td><input name="selfappraisal[${status.index}].rating" value="${a.rating}" maxlength="1" size="1"/></td>
  		<c:set var="sectionname2" value="${a.section}"/>
-		${a.remarks} 
-		${a.rating}
 	</div>  
+
+
+
+
 </c:forEach> 	
 </script>
 </div>
-	
+<input type="submit" value="Save" />
+</form:form>	
 <script>
 angular.module('TabsApp', [])
 .controller('TabsCtrl', ['$scope', function ($scope) {

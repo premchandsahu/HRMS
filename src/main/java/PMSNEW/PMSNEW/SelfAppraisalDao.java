@@ -35,11 +35,24 @@ public class SelfAppraisalDao {
 	            e.setPerformanceind2(rs.getString(8));
 	            e.setPerformanceind3(rs.getString(9));
 	            e.setAppraisalstatus(rs.getString(10));
-	            e.setQuestioncolorder(rs.getInt(12));
+	            e.setSectioncolorder(rs.getInt(14));
+	            e.setQuestioncolorder(rs.getInt(15));
 	            
 	            return e;  
 	        }  
-	    });  
+	    });
+	}
+	    
+	    public List<SelfAppraisal> getSelfAppraisalSections(String pusername,String pmode){  
+		    return template.query("select distinct section,sectioncolorder from  view_getappraisalrecords where user_name='"+pusername+"' and phaseid='"+pmode+"' order by SectionColOrder" ,new RowMapper<SelfAppraisal>(){  
+		        public SelfAppraisal mapRow(ResultSet rs, int row) throws SQLException {  
+		        	SelfAppraisal e=new SelfAppraisal();  
+		            e.setSection(rs.getString(1));
+		            e.setSectioncolorder(rs.getInt(2));
+		            return e;  
+		        }  
+		    });
+	    
 	} 
 	
 	

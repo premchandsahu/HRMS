@@ -12,7 +12,29 @@ public class SelfAppraisal {
 	public String performanceind2;
 	public String performanceind3;
 	public String appraisalstatus;
+	public int sectioncolorder;
 	public int questioncolorder;
+	
+	public SelfAppraisal(){}
+	
+	public SelfAppraisal(int apprempid, int apprempratingid, String section, String question, String remarks,
+			int rating, String performanceind1, String performanceind2, String performanceind3, String appraisalstatus,
+			int sectioncolorder, int questioncolorder) {
+		super();
+		this.apprempid = apprempid;
+		this.apprempratingid = apprempratingid;
+		this.section = section;
+		this.question = question;
+		this.remarks = remarks;
+		this.rating = rating;
+		this.performanceind1 = performanceind1;
+		this.performanceind2 = performanceind2;
+		this.performanceind3 = performanceind3;
+		this.appraisalstatus = appraisalstatus;
+		this.sectioncolorder = sectioncolorder;
+		this.questioncolorder = questioncolorder;
+	}
+
 	
 	
 	public int getApprempid() {
@@ -80,6 +102,12 @@ public class SelfAppraisal {
 	}
 	public void setQuestioncolorder(int questioncolorder) {
 		this.questioncolorder = questioncolorder;
+	}
+	public int getSectioncolorder() {
+		return sectioncolorder;
+	}
+	public void setSectioncolorder(int sectioncolorder) {
+		this.sectioncolorder = sectioncolorder;
 	}
 	
 
