@@ -4,6 +4,7 @@ public class Login {
 
 	private String username;
 	private String password;
+	private int apprempid;
 	public String getUsername() {
 		return username;
 	}
@@ -15,6 +16,12 @@ public class Login {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public int getApprempid() {
+		return apprempid;
+	}
+	public void setApprempid(int apprempid) {
+		this.apprempid = apprempid;
 	}
 	
 	

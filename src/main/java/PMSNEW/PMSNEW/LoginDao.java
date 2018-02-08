@@ -22,11 +22,14 @@ JdbcTemplate template;
 	public int checkLogin(String pusername,String ppassword){
 		int cnt=0;
 	//	String sql="select count(*) uCount from ohrm_user where user_name='"+pusername+"'";
-		String sql="select user_name,user_password  from ohrm_user where user_name='"+pusername+"'";
+		String sql="select user_name,user_password,apprempid  from view_userapprempid where user_name='"+pusername+"'";
 //		String sql="select 'ABC','ABC'";
 		Login glogin=template.queryForObject(sql,new LoginMapper());
 		cnt=checkPassword(ppassword,glogin.getPassword());
-	    return cnt;  
+		if (cnt==0)
+			return 0;
+		else
+	    return glogin.getApprempid();  
 	}  
 	
 	public List<Menu> getMenu(String pusername){  
@@ -59,7 +62,7 @@ class LoginMapper implements RowMapper<Login> {
 	    Login login = new Login();
 	    login.setUsername(rs.getString("user_name"));
 	    login.setPassword(rs.getString("user_password"));
-	  
+	    login.setApprempid(rs.getInt("apprempid"));
 	    return login;
 	  }
 }

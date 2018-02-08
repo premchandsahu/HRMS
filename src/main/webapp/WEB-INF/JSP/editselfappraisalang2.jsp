@@ -57,6 +57,9 @@ body {font-family: Arial;}
     border: 1px solid #ccc;
     border-top: none;
 }
+.selfdiv {
+	display:none;
+}
 </style>
 </head>
 
@@ -77,14 +80,14 @@ body {font-family: Arial;}
 
 </div>
 
-<form:form method="post" action="saveappraisal" modelAttribute="selfappraisal">
+<form:form method="post" action="/PMSNEW/saveappraisal" modelAttribute="selfappraisal">
 
 <c:set var="sectionname" value="ABC"/>
 <c:set var="sectionname1" value="ABC"/>
 <c:set var="sectionname2" value="ABC"/>
 <c:set var="firstrun" value="true"/>
 	
-<c:forEach var="a" items="${selfAppraisals.selfappraisal}" varStatus="status">
+<c:forEach var="a" items="${selfAppraisalAlls.selfappraisalall}" varStatus="status">
 	<c:set var="sectionname1" value="${a.section}"/>
 	<c:if test= "${sectionname1 ne sectionname2}" >
 		<c:if test= "${firstrun eq 'false'}">
@@ -96,15 +99,81 @@ body {font-family: Arial;}
 		<c:set var="firstrun" value="false"/>
 	</c:if>	
 	<h3>${a.question}</h3>
-	<textarea name="selfappraisal[${status.index}].remarks" value="${a.remarks}"></textarea>
-	<td><input name="selfappraisal[${status.index}].rating" value="${a.rating}" maxlength="1" size="1"/></td>
-	<td><Label name="selfappraisal[${status.index}].apprempratingid" value="${a.apprempratingid}" /></td>
-	<td><Label name="selfappraisal[${status.index}].question" value="${a.question}" /></td>\
-	<td><Label name="selfappraisal[${status.index}].question" value="${a.section}" /></td>
- 	<c:set var="sectionname2" value="${a.section}"/>
+	<c:set var="vrating" value="0"/>
+	<c:set var="vremarks" value=""/>
+	<c:set var="ratingid" value="0"/>
+	<c:choose>
+	<c:when test="${apprphaseid eq 1}">
+	<c:set var="vrating" value="${a.rating1}"/>
+	<c:set var="vremarks" value="${a.remarks1}"/>
+	<c:set var="vratingid" value="${a.ratingid1}"/>
+	</c:when>
+	<c:when test="${apprphaseid eq 2}">
+	<c:set var="vrating" value="${a.rating2}"/>
+	<c:set var="vremarks" value="${a.remarks2}"/>
+	<c:set var="vratingid" value="${a.ratingid2}"/>
+	</c:when>
+	<c:otherwise>
+	<c:set var="vrating" value="${a.rating3}"/>
+	<c:set var="vremarks" value="${a.remarks3}"/>
+	<c:set var="vratingid" value="${a.ratingid3}"/>
+	</c:otherwise>
+	</c:choose>
+	
+	<c:if test="${a.ratingyn eq 'N'}">
+	<textarea name="selfappraisal[${status.index}].remarks" cols="100" rows="5">${vremarks}</textarea>
+	</c:if>
+	
+	<c:if test="${a.ratingyn eq 'Y'}">
+	<textarea name="selfappraisal[${status.index}].remarks" cols="90" rows="5">${vremarks}</textarea>
+	<input name="selfappraisal[${status.index}].rating" value="${vrating}" maxlength="1" size="1"/>
+	<button type="button" class="accordion${a.sectioncolorder}" onclick="loadSelfForm('PI${a.questioncolorder}')">PI</button>
+	<div id="PI${a.questioncolorder}" class="selfdiv">
+	<table>
+	<tr>Performance Indicator</tr>
+	<tr><td>Prev. Role</td><td>Curr Role</td><td>Next Role</td></tr>
+  	<tr><td>${a.performanceind1}</td><td>${a.performanceind2}</td><td>${a.performanceind3}</td></tr>
+  	</table>
+  	</div>
+	</c:if>
+
+	<c:if test="${apprphaseid ne 1}">
+	<button type="button" class="accordion${a.sectioncolorder}" onclick="loadSelfForm('DET${a.questioncolorder}')">More</button>
+	</c:if>
+	
+	<td><input type="hidden" name="selfappraisal[${status.index}].apprempratingid" value="${vratingid}" /></td>
+	<td><input type="hidden" name="selfappraisal[${status.index}].apprempid" value="${apprempid}" /></td>
+	<td><input type="hidden" name="selfappraisal[${status.index}].apprphaseid" value="${apprphaseid}" /></td>
+	<div id="DET${a.questioncolorder}" class="selfdiv">
+	<table>
+	<tr><td>Phase</td><td>Remarks</td><td>Rating</td></tr>
+	<c:if test="${apprphaseid ge 3}">
+	<tr><td>Phase</td><td>Remarks</td><td>Rating</td></tr>
+	<tr><td>Appraiser</td><td>${a.remarks2}</td><td>${a.rating2}</td></tr>
+	<tr><td>Appraisee</td><td>${a.remarks1}</td><td>${a.rating1}</td></tr>
+	</c:if>
+	<c:if test="${apprphaseid eq 2}">
+	
+	<tr><td>Appraisee</td><td>${a.remarks1}</td><td>${a.rating1}</td></tr>
+	</c:if>
+	</table>
+	</div>
+	<c:set var="sectionname2" value="${a.section}"/>
 </c:forEach>
 </div>
 
+<script>
+
+function loadSelfForm(row_id)
+{
+var ans=document.getElementById(row_id).style.display==='block';
+   	if(ans)
+    document.getElementById(row_id).style.display='none';	
+   	else
+    document.getElementById(row_id).style.display='block';
+}
+
+</script>
 
 <script>
 function openSection(evt, sectionName) {

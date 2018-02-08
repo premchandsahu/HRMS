@@ -14,12 +14,13 @@ public class SelfAppraisal {
 	public String appraisalstatus;
 	public int sectioncolorder;
 	public int questioncolorder;
+	public int apprphaseid;
 	
 	public SelfAppraisal(){}
 	
 	public SelfAppraisal(int apprempid, int apprempratingid, String section, String question, String remarks,
 			int rating, String performanceind1, String performanceind2, String performanceind3, String appraisalstatus,
-			int sectioncolorder, int questioncolorder) {
+			int sectioncolorder, int questioncolorder,int apprphaseid) {
 		super();
 		this.apprempid = apprempid;
 		this.apprempratingid = apprempratingid;
@@ -33,6 +34,7 @@ public class SelfAppraisal {
 		this.appraisalstatus = appraisalstatus;
 		this.sectioncolorder = sectioncolorder;
 		this.questioncolorder = questioncolorder;
+		this.apprphaseid = apprphaseid;
 	}
 
 	
@@ -108,6 +110,14 @@ public class SelfAppraisal {
 	}
 	public void setSectioncolorder(int sectioncolorder) {
 		this.sectioncolorder = sectioncolorder;
+	}
+
+	public int getApprphaseid() {
+		return apprphaseid;
+	}
+
+	public void setApprphaseid(int apprphaseid) {
+		this.apprphaseid = apprphaseid;
 	}
 	
 

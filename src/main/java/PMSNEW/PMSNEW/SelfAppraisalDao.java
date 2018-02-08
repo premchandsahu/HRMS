@@ -17,7 +17,7 @@ public class SelfAppraisalDao {
 	    this.template = template;  
 	}  
 	public int update(SelfAppraisal p){  
-	    String sql="update appr_empl_rating set remarks='"+p.getRemarks()+"', rating="+p.getRating()+ " where ApprEmpid="+p.getApprempid()+" and ApprEmpRatingId="+p.getApprempratingid();  
+	    String sql="update appr_empl_rating set remarks='"+p.getRemarks()+"', rating="+p.getRating()+ " where  ApprEmpRatingId="+p.getApprempratingid();  
 	    return template.update(sql);  
 	}  
 	
@@ -55,6 +55,41 @@ public class SelfAppraisalDao {
 	    
 	} 
 	
+	    public List<SelfAppraisalAll> getSelfAppraisalAll(String pusername){  
+		    return template.query("select * from  view_getappraisalrecordsallphase where user_name='"+pusername+"' order by SectionColOrder,QuestionColOrder" ,new RowMapper<SelfAppraisalAll>(){  
+		        public SelfAppraisalAll mapRow(ResultSet rs, int row) throws SQLException {  
+		        	SelfAppraisalAll e=new SelfAppraisalAll();  
+		        	e.setApprempid(rs.getInt("apprempid"));
+		        	e.setSection(rs.getString("section"));
+		        	e.setApprquestionid(rs.getInt("apprquestionid"));
+		        	e.setQuestion(rs.getString("question"));
+		        	e.setSectioncolorder(rs.getInt("sectioncolorder"));
+		        	e.setQuestioncolorder(rs.getInt("questioncolorder"));
+		        	e.setPerformanceind1(rs.getString("performanceind1"));
+		        	e.setPerformanceind2(rs.getString("performanceind2"));
+		        	e.setPerformanceind3(rs.getString("performanceind3"));
+		        	e.setRatingyn(rs.getString("ratingyn"));
+		        	e.setRatingid1(rs.getInt("ratingid1"));
+		        	e.setRemarks1(rs.getString("remarks1"));
+		        	e.setRating1(rs.getInt("rating1"));
+		        	e.setPhase1status(rs.getInt("phase1status"));
+		        	e.setRatingid2(rs.getInt("ratingid2"));
+		        	e.setRemarks2(rs.getString("remarks2"));
+		        	e.setRating2(rs.getInt("rating2"));
+		        	e.setPhase2status(rs.getInt("phase2status"));
+		        	e.setRatingid3(rs.getInt("ratingid3"));
+		        	e.setRemarks3(rs.getString("remarks3"));
+		        	e.setRating3(rs.getInt("rating3"));
+		        	e.setPhase3status(rs.getInt("phase3status"));
+		        	e.setIsfinalized(rs.getString("isfinalized"));
+		        	e.setCurr_phase_id(rs.getInt("curr_phase_id"));
+		        	e.setUser_name(rs.getString("user_name"));
+		            return e;  
+		        }  
+		    });
+		}
+		    
+	    
 	
 }
 

@@ -26,7 +26,12 @@
 <ul>
 
  <c:forEach var="a" items="${menulist}">   
+ <c:if test="${a.submodulename eq 'Self Appraisal'}">
+	<li><a href=${a.link}/1/${apprempid}>${a.submodulename}</a></li>
+ </c:if>
+  <c:if test="${a.submodulename ne 'Self Appraisal'}">
 	<li><a href=${a.link}>${a.submodulename}</a></li>
+  </c:if>
 	 </c:forEach>
 </ul>
                 
